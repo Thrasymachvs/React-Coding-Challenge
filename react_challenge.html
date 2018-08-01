@@ -15,17 +15,21 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script  type= "text/babel">
   class ReverseInput extends React.Component{
+    //construct the state
     constructor(props) {
     super(props);
-
+    //Set state variables
     this.state = { userInput: '', reversed: '' };
+    //bind functions
     this.reverser = this.reverser.bind(this);
     this.handleUserInput = this.handleUserInput.bind(this);
 
   }
-
+  //function to reverse a given string
   reverser(){
+    //Take a user's input, split it into an array, reverse the array, and rejoin it, creating a reversed string
     var revstr = this.state.userInput.split("").reverse().join("");
+    //Set this new reversed string to the reversed state value
     this.setState({reversed: revstr});
 
 
@@ -34,12 +38,14 @@
   }
 
   handleUserInput(e) {
+    //update the current string with the value of the textbox, as it updates
     var curstr = e.target.value;
 
     this.setState({userInput: curstr});
 
 
   }
+  //renders the elements within the 'root' div
     render(){
       return (<div>
                 <input type="text" onChange={this.handleUserInput} value = {this.state.userInput}/>
@@ -50,34 +56,44 @@
 
 
   class LinkInfo extends React.Component{
+    //construct the state for the class
         constructor(props){
           super(props);
           this.state = { userInput : 'ENTER A LINK', method: 'GET', data: ''};
+
+          //bind functions
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleUserInput=this.handleUserInput.bind(this);
         }
 
+        //Sets method when user selects a different value
+
         handleChange(e){
           this.setState({method:e.target.value});
         }
 
+        //When submit is clicked, run the proper http method on the link and return the data
+        //Used effectively to get data on github user through https://api.github.com/users/thrasymachvs
+
         handleClick () {
           const httpmethod = this.state.method;
+          //if user selects GET, call axios.get on their provided link
           if(httpmethod == "GET"){axios.get(this.state.userInput).then(response => this.setState({data: JSON.stringify(response.data)}));}
           else{
+            //if the method is POST, use axios.post instead
             axios.post(this.state.link).then(response => this.setState({data: JSON.stringify(response.data)}));
           }
 
 
     }
-
+      //Updates state variable as text box is updated
         handleUserInput(e) {
           var curstr = e.target.value;
 
           this.setState({userInput: curstr});
         }
-
+        //renders all elements in div
           render(){
             return (<div>
                       <input type="text" onChange={this.handleUserInput} value = {this.state.userInput}/>
@@ -92,9 +108,10 @@
 
 
 
-
+//Create link section on page 
     ReactDOM.render(<LinkInfo/>, document.getElementById('getpost_root'));
 
+//Create reverse section on page
   ReactDOM.render(<ReverseInput/>, document.getElementById('root'));
   </script>
 
