@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+
+
+</head>
+<body>
+  <div id = "root"></div>
+  <div id = "getpost_root"></div>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script  type= "text/babel">
+  class ReverseInput extends React.Component{
+    constructor(props) {
+    super(props);
+
+    this.state = { userInput: '', reversed: '' };
+    this.reverser = this.reverser.bind(this);
+    this.handleUserInput = this.handleUserInput.bind(this);
+
+  }
+
+  reverser(){
+    var revstr = this.state.userInput.split("").reverse().join("");
+    this.setState({reversed: revstr});
+
+
+
+
+  }
+
+  handleUserInput(e) {
+    var curstr = e.target.value;
+
+    this.setState({userInput: curstr});
+
+
+  }
+    render(){
+      return (<div>
+                <input type="text" onChange={this.handleUserInput} value = {this.state.userInput}/>
+              <button onClick={this.reverser}>Reverse</button>
+              <h1>REVERSED:{this.state.reversed}</h1></div>);
+    }
+  }
+
+
+  class LinkInfo extends React.Component{
+        constructor(props){
+          super(props);
+          this.state = { userInput : 'ENTER A LINK', method: 'GET', data: ''};
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleUserInput=this.handleUserInput.bind(this);
+        }
+
+        handleChange(e){
+          this.setState({method:e.target.value});
+        }
+
+        handleClick () {
+          const httpmethod = this.state.method;
+          if(httpmethod == "GET"){axios.get(this.state.userInput).then(response => this.setState({data: JSON.stringify(response.data)}));}
+          else{
+            axios.post(this.state.link).then(response => this.setState({data: JSON.stringify(response.data)}));
+          }
+
+
+    }
+
+        handleUserInput(e) {
+          var curstr = e.target.value;
+
+          this.setState({userInput: curstr});
+        }
+
+          render(){
+            return (<div>
+                      <input type="text" onChange={this.handleUserInput} value = {this.state.userInput}/>
+                      <select value={this.state.method} onChange={this.handleChange}>
+                          <option value = "GET">GET</option>
+                          <option value = "POST">POST</option>
+                      </select>
+                    <button onClick={this.handleClick}>SUBMIT</button>
+                    <h1>INFO:{this.state.data}</h1></div>);
+          }
+        }
+
+
+
+
+    ReactDOM.render(<LinkInfo/>, document.getElementById('getpost_root'));
+
+  ReactDOM.render(<ReverseInput/>, document.getElementById('root'));
+  </script>
+
+</body>
+</html>
