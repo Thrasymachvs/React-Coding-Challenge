@@ -3,9 +3,13 @@ Learning React, without trying to Over-React
 
 TO RUN:
 
-It can all be run locally by downloading the HTML file and running it in-browser; it uses CDN to pull all of the necessary .js files.
-
-Currently, it all runs as a single HTML file, with no descript distinction between a front-end/back-end. I'm working on integrating with Node 
-and making a more clearly defined front/back-end for communication, but wanted to push an initial build for progress. 
-
-It's not pretty, because I wanted to spend initial focus on getting the fundamentals working. 
+1. Download the react-challenge folder
+2. Navigate to it in command line
+3. Run npm install from within react-challenge and react-challenge/client 
+4. Start express server:
+    Windows: use command "set PORT=3001 && node bin/www"
+    Linux/Unix: PORT=3001 node bin/www
+5. Start React Dev Server
+    5a) navigate to react-challenge/client
+    5b) run npm start 
+ 6. The page should load with all of the requisite data! 
